@@ -13,3 +13,13 @@ ADD COLUMN `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 ALTER TABLE `recipe`
 ADD COLUMN `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+-- Modifica estructura para la tabla recipe agrega titilo para la receta
+
+ALTER TABLE `recipe`
+ADD COLUMN `title` VARCHAR(255) NOT NULL;
+
+-- Se modifica la estructura de la tabla user en la fila id para introducir el formato BIGING Para tener en cuenta que otras tablas tambien usan el id para relacionarse mediante el usuario asi que se debe modificar en esas tabla el tipo de dato.
+
+ALTER TABLE `user`
+MODIFY COLUMN `id` BIGINT UNSIGNED NOT NULL;

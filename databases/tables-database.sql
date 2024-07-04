@@ -5,7 +5,7 @@ USE `shared_meal`;
 -- Estructura de la tabla usuarios
 
 CREATE TABLE IF NOT EXISTS `user` (
-    `id` BINARY(16) NOT NULL,
+    `id` BIGINT UNSIGNED NOT NULL,
     `user_name` VARCHAR(28) NOT NULL UNIQUE,
     `password` VARCHAR(16) NOT NULL,
     PRIMARY KEY (`id`)
@@ -21,9 +21,9 @@ CREATE TRIGGER before_insert_user
 BEFORE INSERT ON `user`
 FOR EACH ROW
 BEGIN
-    IF NEW.id IS NULL THEN
-        SET NEW.id = UUID_TO_BIN(UUID());
-    END IF;
+
+    SET NEW.id = UUID_SHORT();
+
 END $$
 
 DELIMITER ;
@@ -32,7 +32,7 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `step` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` BINARY(16) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
     `description` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`),
@@ -48,7 +48,7 @@ COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `recipe` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` BINARY(16) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
     `step_1_id` INT NOT NULL,
     `step_2_id` INT DEFAULT NULL,
     `step_3_id` INT DEFAULT NULL,
@@ -82,7 +82,7 @@ COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `rating` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` BINARY(16) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
     `recipe_id` INT NOT NULL,
 
     PRIMARY KEY (`id`),
@@ -100,7 +100,7 @@ COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `favorite_recipe` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` BINARY(16) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
     `recipe_id` INT NOT NULL,
 
     PRIMARY KEY (`id`),
@@ -118,7 +118,7 @@ COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `shared_recipes`(
     `id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` BINARY(16) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
     `recipe_id` INT NOT NULL,
 
     PRIMARY KEY (`id`),
